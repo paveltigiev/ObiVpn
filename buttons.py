@@ -12,18 +12,20 @@ async def main_buttons(user: User):
         dateto = datetime.utcfromtimestamp(int(user.subscription)+CONFIG["UTC_time"]*3600).strftime('%d.%m.%Y %H:%M')
         timenow = int(time.time())
         #print(datetime.utcfromtimestamp(timenow).strftime('%Y-%m-%d %H:%M'))
-        if int(user.subscription)<timenow:
-            Butt_main.add(types.KeyboardButton(e.emojize(f":red_circle: Закончилась: {dateto} МСК:red_circle:")))
-        if int(user.subscription)>=timenow:
-            Butt_main.add(types.KeyboardButton(e.emojize(f":green_circle: До: {dateto} МСК:green_circle:")))
+        # if int(user.subscription)<timenow:
+        #     Butt_main.add(types.KeyboardButton(e.emojize(f"Статус")))
+        # if int(user.subscription)>=timenow:
+        #     Butt_main.add(types.KeyboardButton(e.emojize(f"Статус")))
 
-        Butt_main.add(types.KeyboardButton(e.emojize(f"Продлить :money_bag:")),types.KeyboardButton(e.emojize(f"Как подключить :gear:")))
+        Butt_main.add(types.KeyboardButton(e.emojize(f"Статус подписки")))
+
+        Butt_main.add(types.KeyboardButton(e.emojize(f":rocket: Продлить")),types.KeyboardButton(e.emojize(f":red_envelope: Как подключить")))
+
+        Butt_main.add(types.KeyboardButton(e.emojize(f":ambulance: Поддержка")),types.KeyboardButton(e.emojize(f":shinto_shrine: О проекте")))
 
         if CONFIG["admin_tg_id"] == user.tgid:
-            Butt_main.add(types.KeyboardButton(e.emojize(f"Админ-панель :smiling_face_with_sunglasses:")))
+            Butt_main.add(types.KeyboardButton(e.emojize(f":control_knobs: Админка")))
         return Butt_main
-
-
 
 
 async def admin_buttons():
