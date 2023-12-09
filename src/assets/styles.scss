@@ -1,0 +1,145 @@
+body {
+  font-family: "Open_Sans", sans-serif;
+  background: #272529;
+  font-weight: 400;
+  font-size: 16px;
+  color: #fff;
+  text-align: left;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.container {
+  max-width: 350px;
+  padding: 10px 15px;
+  margin: 0 auto;
+}
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+  text-decoration: none;
+  color: #fff;
+}
+.logo_img {
+  width: 93px;
+  height: 93px;
+}
+.logo_title {
+  font-size: 44px;
+  line-height: 1em;
+  font-weight: 400;
+  margin: 0;
+}
+
+.sub_title {
+  font-size: 20px;
+  line-height: 1em;
+  font-weight: 200;
+  margin-bottom: 36px;
+}
+
+.tabs {
+  background: #fff;
+  display: flex;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.tabs_btn {
+  padding: 22px;
+  display: flex;
+  border-radius: 16px;
+  text-align: center;
+  justify-content: center;
+  color: #871719;
+  width: 50%;
+  font-weight: 600;
+}
+.active_tab {
+  color: #fff;
+  background: #871719;
+}
+
+.video_wrapper {
+  position: relative;
+  margin: 0 auto 40px;
+  max-width: 280px;
+
+  &.desctop {
+    max-width: 100%;
+
+    &:before {
+      left: -4px;
+      top: -4px;
+      bottom: -4px;
+      right: -4px;
+      border-radius: 4px;
+    }
+    .video {
+      border-radius: 4px;
+    }
+  }
+}
+.video_wrapper:before {
+  content: '';
+  position: absolute;
+  left: -16px;
+  top: -16px;
+  bottom: -16px;
+  right: -16px;
+  background: #333;
+  border-radius: 32px;
+  z-index: -1;
+}
+.brove {
+  left: 50%;
+  margin-left: -65px;
+  width: 130px;
+  height: 20px;
+  background: #333;
+  position: absolute;
+  border-radius: 0 0 20px 20px;
+}
+
+.speaker {
+  position: absolute;
+  left: 50%;
+  width: 60px;
+  height: 5px;
+  background: #d2d2d2;
+  display: block;
+  margin: auto;
+  margin-top: 5px;
+  margin-left: -30px;
+  border-radius: 20px;
+}
+.video {
+  max-width: 100%;
+  border-radius: 16px;
+}
+
+.main_btn {
+  padding: 22px;
+  border-radius: 16px;
+  background: #871719;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  border: 0;
+}
+.footer_link {
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 200;
+  text-decoration-line: underline;
+  display: block;
+  padding: 8px;
+  text-align: center;
+}
