@@ -146,7 +146,7 @@ async def Work_with_Message(m: types.Message):
     Butt_skip = types.ReplyKeyboardMarkup(resize_keyboard=True)
     Butt_skip.add(types.KeyboardButton(e.emojize(f"Пропустить :next_track_button:")))
     await bot.send_message(m.from_user.id, "Введите сколько часов хотите добавить:", reply_markup=Butt_skip)
-    
+
 @bot.message_handler(state=MyStates.UserAddTimeHours, content_types=["text"])
 async def Work_with_Message(m: types.Message):
     if e.demojize(m.text) == "Пропустить :next_track_button:":
@@ -297,11 +297,11 @@ async def Work_with_Message(m: types.Message):
     await user_dat.CheckNewNickname(m)
 
     if m.from_user.id==CONFIG["admin_tg_id"]:
-        if e.demojize(m.text) == "Админ-панель :smiling_face_with_sunglasses:":
-            await bot.send_message(m.from_user.id,"Админ панель",reply_markup=await buttons.admin_buttons())
+        if e.demojize(m.text) == ":control_knobs: Админка":
+            await bot.send_message(m.from_user.id,"Админка",reply_markup=await buttons.admin_buttons())
             return
         if e.demojize(m.text) == "Главное меню :right_arrow_curving_left:":
-            await bot.send_message(m.from_user.id, e.emojize("Админ-панель :smiling_face_with_sunglasses:"), reply_markup=await main_buttons(user_dat))
+            await bot.send_message(m.from_user.id, e.emojize(":control_knobs: Админка"), reply_markup=await main_buttons(user_dat))
             return
         if e.demojize(m.text) == "Вывести пользователей :bust_in_silhouette:":
             await bot.send_message(m.from_user.id, e.emojize("Выберите каких пользователей хотите вывести."),
@@ -309,7 +309,7 @@ async def Work_with_Message(m: types.Message):
             return
 
         if e.demojize(m.text) == "Назад :right_arrow_curving_left:":
-            await bot.send_message(m.from_user.id, "Админ панель", reply_markup=await buttons.admin_buttons())
+            await bot.send_message(m.from_user.id, "Админка", reply_markup=await buttons.admin_buttons())
             return
 
         if e.demojize(m.text) == "Всех пользователей":
@@ -384,7 +384,7 @@ async def Work_with_Message(m: types.Message):
             await bot.set_state(m.from_user.id,MyStates.AdminNewUser)
             return
 
-    if e.demojize(m.text) == "Продлить :money_bag:":
+    if e.demojize(m.text) == ":rocket: Продлить":
         payment_info= await user_dat.PaymentInfo()
         # if not payment_info is None:
         #     urltopay=CONFIG["url_redirect_to_pay"]+str((await p2p.check(bill_id=payment_info['bill_id'])).pay_url)[-36:]
@@ -398,31 +398,62 @@ async def Work_with_Message(m: types.Message):
         if True:
             Butt_payment = types.InlineKeyboardMarkup()
             Butt_payment.add(
-                types.InlineKeyboardButton(e.emojize(f"1 мес. 📅 - {str(1*CONFIG['one_month_cost'])} руб."), callback_data="BuyMonth:1"))
+                types.InlineKeyboardButton(e.emojize(f"1 мес. 🗓️ {str(1*CONFIG['one_month_cost'])} руб."), callback_data="BuyMonth:1"))
             Butt_payment.add(
-                types.InlineKeyboardButton(e.emojize(f"3 мес. 📅 - {str(3*CONFIG['one_month_cost'])} руб."), callback_data="BuyMonth:3"))
+                types.InlineKeyboardButton(e.emojize(f"3 мес. 🗓️ {str(3*CONFIG['one_month_cost'])} руб."), callback_data="BuyMonth:3"))
             Butt_payment.add(
-                types.InlineKeyboardButton(e.emojize(f"6 мес. 📅 - {str(6*CONFIG['one_month_cost'])} руб."), callback_data="BuyMonth:6"))
+                types.InlineKeyboardButton(e.emojize(f"6 мес. 🗓️ {str(6*CONFIG['one_month_cost'])} руб."), callback_data="BuyMonth:6"))
             #await bot.send_message(m.chat.id, "<b>Оплатить можно с помощью Банковской карты или Qiwi кошелька!</b>\n\nВыберите на сколько месяцев хотите приобрести подписку:", reply_markup=Butt_payment,parse_mode="HTML")
-            await bot.send_message(m.chat.id,
-                                   "<b>Оплатить можно с помощью Банковской карты!</b>\n\nВыберите на сколько месяцев хотите приобрести подписку:",
-                                   reply_markup=Butt_payment, parse_mode="HTML")
+            await bot.send_message(m.chat.id, "Выбери подходящий вариант", reply_markup=Butt_payment, parse_mode="HTML")
 
-    if e.demojize(m.text) == "Как подключить :gear:":
+    if e.demojize(m.text) == ":red_envelope: Как подключить":
         if user_dat.trial_subscription == False:
             Butt_how_to = types.InlineKeyboardMarkup()
             Butt_how_to.add(
-                types.InlineKeyboardButton(e.emojize("Инструкция для iPhone"), url="https://telegra.ph/Gajd-na-ustanovku-WireGuard-01-16"))
+                types.InlineKeyboardButton(e.emojize("📱 Инструкция для телефона"), url="https://dragonvpn.ru/howto_mobile"))
             Butt_how_to.add(
-                types.InlineKeyboardButton(e.emojize("Инструкция для Android"), url="https://telegra.ph/Gajd-na-ustanovku-WireGuard-Android-01-16"))
+                types.InlineKeyboardButton(e.emojize("💻 Инструкция для компа"), url="https://dragonvpn.ru/howto_desctop"))
             Butt_how_to.add(
-                types.InlineKeyboardButton(e.emojize("Проверить VPN"),
-                                           url="https://2ip.ru/"))
+                types.InlineKeyboardButton(e.emojize("Проверить анонимность"), url="https://2ip.ru/"))
             config = open(f'/root/wg0-client-{str(user_dat.tgid)}.conf', 'rb')
             await bot.send_document(chat_id=m.chat.id,document=config,visible_file_name=f"{str(user_dat.tgid)}.conf",caption=texts_for_bot["how_to_connect_info"],parse_mode="HTML",reply_markup=Butt_how_to)
         else:
-            await bot.send_message(chat_id=m.chat.id,text="Сначала нужно купить подписку!")
+            await bot.send_message(chat_id=m.chat.id,text="Сначала нужно оплатить подписку!")
 
+
+    if e.demojize(m.text) == "Статус подписки":
+        user_dat = await User.GetInfo(m.from_user.id)
+        if user_dat.subscription != "none":
+            dateto = datetime.utcfromtimestamp(int(user_dat.subscription) + CONFIG["UTC_time"] * 3600).strftime('%d.%m.%Y %H:%M')
+            timenow = int(time.time())
+            if int(user_dat.subscription) < timenow:
+                status_text = f"Подписка закончилась :red_circle:\nНажми \"Продлить\" в меню ниже"
+
+            elif int(user_dat.subscription) >= timenow:
+                status_text = f"Подписка активна :green_circle:\nДо ({dateto}) мск\nСервер: 🇳🇱 Нидерланды"
+        else:
+            status_text = "У вас нет активной подписки"
+        await bot.send_message(m.from_user.id, e.emojize(status_text), parse_mode="HTML")
+
+    if e.demojize(m.text) == ":ambulance: Поддержка":
+        support_text = (
+            "Для получения помощи в решении вопросов, связанных подключением или использованием VPN, "
+            "пиши нам в поддержку @super_help."
+        )
+        await bot.send_message(m.from_user.id, support_text, parse_mode="HTML")
+
+    if e.demojize(m.text) == ":shinto_shrine: О проекте":
+        about_text = (
+            "Мы небольшая команда специалистов в области безопасности данных, предоставляющая всем желающим использовать интернет без ограничений.\n\n"
+            "Что ты получишь используя DragonVPN:\n"
+            "🔓 Доступ к любым сайтам и приложениям\n"
+            "🧙🏻‍♂️ Шифрование всех сетевых данных\n"
+            "📍 Скрытие твоего местоположения\n"
+            "👌 Минимальную стоимость подписки\n"
+            "😌 Простую настройку\n"
+            "🚀 Высокую скорость\n"
+        )
+        await bot.send_message(m.from_user.id, about_text, parse_mode="HTML")
 
 
 @bot.callback_query_handler(func=lambda c: 'BuyMonth:' in c.data)
@@ -474,7 +505,7 @@ async def AddTimeToUser(tgid,timetoadd):
         passdat = int(time.time()) + timetoadd
         await db.execute(f"Update userss set subscription = ?, banned=false, notion_oneday=false where tgid=?",(str(int(time.time()) + timetoadd), userdat.tgid))
         check = subprocess.call(f'./addusertovpn.sh {str(userdat.tgid)}', shell=True)
-        await bot.send_message(userdat.tgid, e.emojize( 'Данны для входа были обновлены, скачайте новый файл авторизации через раздел "Как подключить :gear:"'))
+        await bot.send_message(userdat.tgid, e.emojize( 'Данны для входа были обновлены, скачайте новый файл авторизации через раздел ":red_envelope: Как подключить"'))
     else:
         passdat = int(userdat.subscription) + timetoadd
         await db.execute(f"Update userss set subscription = ?, notion_oneday=false where tgid=?",(str(int(userdat.subscription)+timetoadd), userdat.tgid))
@@ -487,7 +518,7 @@ async def AddTimeToUser(tgid,timetoadd):
         Butt_main.add(
             types.KeyboardButton(e.emojize(f":green_circle: До: {dateto} МСК:green_circle:")))
 
-    Butt_main.add(types.KeyboardButton(e.emojize(f"Продлить :money_bag:")),
+    Butt_main.add(types.KeyboardButton(e.emojize(f":rocket: Продлить")),
                   types.KeyboardButton(e.emojize(f"Как подключить :gear:")))
 
 @bot.callback_query_handler(func=lambda c: 'DELETE:' in c.data or 'DELETYES:' in c.data or 'DELETNO:' in c.data)
@@ -579,7 +610,7 @@ bot.add_custom_filter(asyncio_filters.StateFilter(bot))
 #                             passdat=int(time.time())+i["time_to_add"]
 #                             db.execute(f"UPDATE userss SET subscription = ?, banned=false, notion_oneday=false where tgid=?",(str(int(time.time())+i["time_to_add"]),i['tgid']))
 #                             #check = subprocess.call(f'./addusertovpn.sh {str(i["tgid"])}', shell=True)
-#                             BotChecking.send_message(i['tgid'],e.emojize('Данны для входа были обновлены, скачайте новый файл авторизации через раздел "Как подключить :gear:"'))
+#                             BotChecking.send_message(i['tgid'],e.emojize('Данны для входа были обновлены, скачайте новый файл авторизации через раздел ":red_envelope: Как подключить"'))
 #                         else:
 #                             passdat = int(userdat[2]) + i["time_to_add"]
 #                             db.execute(f"UPDATE userss SET subscription = ?, notion_oneday=false where tgid=?",
@@ -594,8 +625,8 @@ bot.add_custom_filter(asyncio_filters.StateFilter(bot))
 #                             Butt_main.add(
 #                                 types.KeyboardButton(e.emojize(f":green_circle: До: {dateto} МСК:green_circle:")))
 #
-#                         Butt_main.add(types.KeyboardButton(e.emojize(f"Продлить :money_bag:")),
-#                                       types.KeyboardButton(e.emojize(f"Как подключить :gear:")))
+#                         Butt_main.add(types.KeyboardButton(e.emojize(f":rocket: Продлить")),
+#                                       types.KeyboardButton(e.emojize(f":red_envelope: Как подключить")))
 #
 #                         BotChecking.edit_message_reply_markup(chat_id=i['tgid'],message_id=i['mesid'],reply_markup=None)
 #                         BotChecking.send_message(i['tgid'],
@@ -642,8 +673,8 @@ def checkTime():
                     Butt_main = types.ReplyKeyboardMarkup(resize_keyboard=True)
                     Butt_main.add(
                             types.KeyboardButton(e.emojize(f":red_circle: Закончилась: {dateto} МСК:red_circle:")))
-                    Butt_main.add(types.KeyboardButton(e.emojize(f"Продлить :money_bag:")),
-                                  types.KeyboardButton(e.emojize(f"Как подключить :gear:")))
+                    Butt_main.add(types.KeyboardButton(e.emojize(f":rocket: Продлить")),
+                                  types.KeyboardButton(e.emojize(f":red_envelope: Как подключить")))
                     BotChecking = TeleBot(BOTAPIKEY)
                     BotChecking.send_message(i['tgid'],
                                              texts_for_bot["ended_sub_message"],
